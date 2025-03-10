@@ -7,7 +7,6 @@ import pytz
 
 # Timezone settings
 TIMEZONE = "Europe/Copenhagen"
-tz = pytz.timezone(TIMEZONE)
 
 # Path to your Obsidian daily notes folder
 DAILY_NOTES_FOLDER = "/path/to/your/obsidian/daily notes/"
@@ -18,10 +17,13 @@ FTP_HOST = "yourserver.com"
 FTP_USER = "username"
 FTP_PASS = "password"
 FTP_REMOTE_PATH = "/public_html/calendar/obsidian.ics"  # Where to store the file
+UPLOAD_ICS = True
 
 # Regular expression for extracting event timestamps
 # Each event should be a line like: "- [ ] hh:mm - eventname"
 EVENT_REGEX = re.compile(r"- \[ \] (\d{2}:\d{2})\s*-\s*(.+)")
+
+tz = pytz.timezone(TIMEZONE)
 
 def parse_events_from_md(file_path, event_date):
     """Parses events from a Markdown file, extracting times and descriptions."""
@@ -95,9 +97,12 @@ def main():
 
     if all_events:
         create_ics_file(all_events)
-        upload_to_ftp(OUTPUT_ICS_FILE)
+        if UPLOAD_ICS:
+            upload_to_ftp(OUTPUT_ICS_FILE)
     else:
         print("No events found in the daily notes.")
+        print("Make sure events match the format:")
+        print("- [ ] HH:MM - Eventname")
 
 if __name__ == "__main__":
     main()
