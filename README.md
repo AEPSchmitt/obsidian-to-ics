@@ -17,4 +17,4 @@ FTP_REMOTE_PATH = "/public_html/calendar/obsidian.ics"  # Where to store the fil
 UPLOAD_ICS = True
 ```
 
-Set `UPLOAD_ICS = True` to `False` to skip FTP upload.
+Set `UPLOAD_ICS` to `False` to skip FTP upload.
